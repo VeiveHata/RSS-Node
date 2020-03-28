@@ -1,34 +1,28 @@
+/* eslint-disable no-process-exit */
 module.exports = function paramsCheck(args) {
-  try {
-    checkAction(args.action);
-    checkShift(args.shift);
-  } catch (err) {
-    console.log(err.message);
-  }
+  checkAction(args.action);
+  checkShift(args.shift);
 };
 
 function checkAction(action) {
-  if (!action) {
-    throw new Error(
-      "error: required argument '-a, --action [action_type]' is missing. Set action"
-    );
-  }
   if (!['encode', 'decode'].includes(action)) {
-    throw new Error(
+    process.stderr.write(
       "error: required option '-a, --action [action_type]'. Set correct action type: encode, decode"
     );
+    process.exit(1);
   }
 }
 
 function checkShift(shift) {
-  if (!shift) {
-    throw new Error(
-      "error: required argument '-s, --shift [number]' is missing.Set action"
+  console.log(shift, !isNaN(shift));
+  if (!isNumeric(shift)) {
+    process.stderr.write(
+      "error: required option '-s, --shift [number]'. set correct number from 1"
     );
+    process.exit(1);
   }
-  if (!Number(shift)) {
-    throw new Error(
-      "error: required option '-s, --shift [number]'. set correct number"
-    );
-  }
+}
+
+function isNumeric(value) {
+  return /^\d+$/.test(value);
 }
