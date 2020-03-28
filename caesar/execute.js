@@ -1,24 +1,33 @@
-const paramsCheck = require('./paramsCheck');
+const { paramsCheck, checkFilePath } = require('./paramsCheck');
 const fs = require('fs');
 const { pipeline } = require('stream');
 const caesar = require('./caesar');
 
 module.exports = async function execution(args) {
   try {
-    paramsCheck(args);
+    await paramsCheck(args);
+    const isInputCorrect = await checkFilePath(args.input);
+    const isOutputCorrect = await checkFilePath(args.output);
+
     await pipeline(
-      fs.createReadStream(args.input),
+      isInputCorrect ? fs.createReadStream(args.input) : process.stdin,
       caesar(args.action, args.shift),
-      fs.createWriteStream(args.output, { flags: 'a' }),
+      isOutputCorrect
+        ? fs.createWriteStream(args.output, { flags: 'a' })
+        : process.stdout,
       error => {
         if (error) {
-          throw new Error(error);
+          process.stderr.write('some unexpected error accured');
+          // eslint-disable-next-line no-process-exit
+          process.exit(1);
         } else {
           console.log('Your cipher is finished');
         }
       }
     );
   } catch (error) {
-    console.log(error.message);
+    process.stderr.write(error.message);
+    // eslint-disable-next-line no-process-exit
+    process.exit(1);
   }
 };
