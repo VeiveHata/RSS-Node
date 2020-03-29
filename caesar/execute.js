@@ -9,6 +9,9 @@ module.exports = async function execution(args) {
     await paramsCheck(args);
     const isInputCorrect = await checkFilePath(args.input);
     const isOutputCorrect = await checkFilePath(args.output);
+    if (!isInputCorrect) {
+      process.stdout.write('Press Ctrl+C for exit\n');
+    }
     await pipeline(
       isInputCorrect
         ? fs.createReadStream(path.join(__dirname, args.input))

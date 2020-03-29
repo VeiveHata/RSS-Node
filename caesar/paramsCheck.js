@@ -11,19 +11,17 @@ module.exports = {
 };
 async function checkAction(action) {
   if (!['encode', 'decode'].includes(action)) {
-    process.stderr.write(
+    throw new Error(
       "error: required option '-a, --action [action_type]'. Set correct action type: encode, decode"
     );
-    process.exit(1);
   }
 }
 
 async function checkShift(shift) {
   if (!isNumeric(shift)) {
-    process.stderr.write(
-      "error: required option '-s, --shift [number]'. Set correct number from"
+    throw new Error(
+      "error: required option '-s, --shift [number]'. Set correct number from 1"
     );
-    process.exit(1);
   }
 }
 
