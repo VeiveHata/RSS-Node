@@ -1,7 +1,10 @@
 const { Transform } = require('stream');
 
 module.exports = function caesar(action, shift) {
-  createVocabulary(action === 'encode' ? shift : -shift);
+  const correctShiftValue = shift % 25;
+  createVocabulary(
+    action === 'encode' ? correctShiftValue : -correctShiftValue
+  );
 
   const caesarTransform = new Transform({
     transform: (data, encoding, callback) => {

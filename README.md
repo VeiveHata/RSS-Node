@@ -71,7 +71,7 @@ node caesar -a <action> -s <number> -i <filename> -o <filename>
 ````
 -a, --action is requiered option. Should be one of encode/decode action.
 
--s, --shift is requiered option. Should be a number of shift. A number should be between 1 and 25 (count of ABC letters)
+-s, --shift is requiered option. Should be a number of shift. A number should be positive
 
 -i, --input is optional. If input is defined the text for encoding/decoding will be taken from it. If input is not defined, text will be taken from terminal input.
 

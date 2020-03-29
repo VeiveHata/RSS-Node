@@ -20,7 +20,7 @@ async function checkAction(action) {
 async function checkShift(shift) {
   if (!isNumeric(shift)) {
     process.stderr.write(
-      "error: required option '-s, --shift [number]'. set correct number from 1"
+      "error: required option '-s, --shift [number]'. Set correct number from"
     );
     process.exit(1);
   }
