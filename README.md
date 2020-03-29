@@ -58,3 +58,19 @@ npm run lint
 Press <kbd>F5</kbd> to debug.
 
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+
+## Running Сaesar cryptographer
+
+```
+node caesar -a <action> -s <number> -i <filename> -o <filename>
+```
+## Сaesar options
+
+````
+-a, --action is requiered option. Should be one of encode/decode action.
+
+-s, --shift is requiered option. Should be a number of shift. A number should be between 1 and 25 (count of ABC letters)
+
+-i, --input is optional. If input is defined the text for encoding/decoding will be taken from it. If input is not defined, text will be taken from terminal input.
+
+-o, --output is optional. If output is defined the text for encoding/decoding will be taken from it. If output is not defined, text will be put intoto terminal.
