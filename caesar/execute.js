@@ -2,22 +2,26 @@ const { paramsCheck, checkFilePath } = require('./paramsCheck');
 const fs = require('fs');
 const { pipeline } = require('stream');
 const caesar = require('./caesar');
+const path = require('path');
 
 module.exports = async function execution(args) {
   try {
     await paramsCheck(args);
     const isInputCorrect = await checkFilePath(args.input);
     const isOutputCorrect = await checkFilePath(args.output);
-
     await pipeline(
-      isInputCorrect ? fs.createReadStream(args.input) : process.stdin,
+      isInputCorrect
+        ? fs.createReadStream(path.join(__dirname, args.input))
+        : process.stdin,
       caesar(args.action, args.shift),
       isOutputCorrect
-        ? fs.createWriteStream(args.output, { flags: 'a' })
+        ? fs.createWriteStream(path.join(__dirname, args.output), {
+            flags: 'a'
+          })
         : process.stdout,
       error => {
         if (error) {
-          process.stderr.write('some unexpected error accured');
+          process.stderr.write(error);
           // eslint-disable-next-line no-process-exit
           process.exit(1);
         } else {
@@ -26,7 +30,7 @@ module.exports = async function execution(args) {
       }
     );
   } catch (error) {
-    process.stderr.write(error.message);
+    process.stderr.write(`${error}\n`);
     // eslint-disable-next-line no-process-exit
     process.exit(1);
   }

@@ -1,5 +1,6 @@
 /* eslint-disable no-process-exit */
 const fs = require('fs');
+const path = require('path');
 
 module.exports = {
   paramsCheck: async function paramsCheck(args) {
@@ -30,18 +31,17 @@ function isNumeric(value) {
   return /^\d+$/.test(value);
 }
 
-async function checkFilePath(input) {
-  if (input && typeof input === 'string') {
+async function checkFilePath(file) {
+  if (file && typeof file === 'string') {
     return new Promise((resolve, reject) =>
-      fs.access(input, fs.F_OK, err => {
+      fs.access(path.join(__dirname, file), fs.F_OK, err => {
         if (err) {
-          // change
-          reject(err);
+          reject('error: Set correct file path');
         }
         resolve(true);
       })
     );
-  } else if (!input) {
+  } else if (!file) {
     return false;
   }
 }
