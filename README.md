@@ -59,12 +59,14 @@ Press <kbd>F5</kbd> to debug.
 
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 
-## Running Сaesar cryptographer
+## Сaesar cryptographer
+
+### Running  Сaesar cryptographer
 
 ```
 node caesar -a <action> -s <number> -i <filename> -o <filename>
 ```
-## Сaesar options
+### Сaesar options
 
 ````
 -a, --action is requiered option. Should be one of encode/decode action.
